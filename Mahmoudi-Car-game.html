@@ -1,0 +1,244 @@
+<html>
+    <head>
+        
+        <title>MAHMOUDI-CAR</title>
+
+        <script>
+          /*var audio3= new Audio('start.wav');
+          audio3.play();*/
+          
+        </script>
+        <style>
+             body{background-image: url('rang.jpg');}
+
+canvas {
+  border: 8px dotted orange;
+}
+        </style>
+    </head>
+    <body >
+        <div  style="border: 50px;" id="star">
+
+
+
+        <canvas  id="canvas"  style="  background-color: rgb(25, 66, 29); "  > </canvas>
+        
+
+<script>
+
+document.onkeydown = function(e) {
+    switch (e.keyCode) {
+        case 37:
+        if (!(x+dx<700)){x += -dx;}
+        
+            break;
+        case 38:
+        if(songs=='on'){
+            songs='off';
+            break;
+        }
+        if(songs=='off'){songs='on';}
+           break;
+        case 39:
+            if(!(x+dx>750)){x += dx;}
+        
+            break;
+        case 40:
+            alert("pause");
+            break;
+    }
+};</script>
+
+       
+<script >
+
+
+
+
+   
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth-38;
+canvas.height = window.innerHeight-38;
+var x = 730;
+var y = 600;
+var songs="on";
+var audio1 = new Audio('fin.wav');
+var audio = new Audio('son1.wav');
+
+ var sco=0;/*score*/
+ var s=1;/*level*/
+var v1=0;/*point tabda meno voiture 1*/
+var v2=0;/*point tabda meno voiture 2*/
+var v3=0;/*point tabda meno voiture 3*/
+
+var vv1=s+Math.random() * 4;/*vitese voiture1*/
+var vv2=s+Math.random() * 4;/*vitese voiture2*/
+var vv3=s+Math.random() * 4;/*vitese voiture3*/
+var r=2.5;
+var dx = 100;
+
+
+function change(){
+switch(sco){
+
+case 30:s+=+1;break;
+case 50:s+=+1;break;
+case 70:s+=+1;break;
+case 90:s+=+1;break;
+case 110:s+=+1;break;
+case 130:s+=+1;break;
+case 160:s+=+1;break;
+case 200:s+=+1;break;
+
+
+}
+}
+
+
+
+function son(s){
+ if(songs=="on"){
+    if(s==1){
+    var audio = new Audio('son1.wav');
+     audio.play();}
+    if(s==2){
+    audio1.play();}
+}
+}
+
+function drawrec(a,b) {
+ctx.beginPath();
+ctx.rect(a, b, 50, 40);
+ctx.fill();
+}
+
+function drcar(a,b,sr){
+var car = new Image();
+car.src=sr;
+ctx.drawImage(car,a, b,50,40);}
+
+
+function animate() {
+
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.fillStyle="black";/*tri9 ak7al*/
+ctx.beginPath();
+ctx.rect((canvas.width/2)-170, 0, (canvas.width/2)-370, canvas.height);
+ctx.fill();/**/
+
+ctx.fillStyle="white";/*5at abyath1*/
+ctx.beginPath();
+ctx.rect(700, 0,8, canvas.height);
+ctx.fill();/**/
+
+ctx.fillStyle="white";/*5at abyath2*/
+ctx.beginPath();
+ctx.rect(600, 0,8, canvas.height);
+ctx.fill();/**/
+
+ctx.font = "30px Arial";
+ctx.fillStyle = "whit";
+ctx.fillText("Score: "+sco, 8, 50);
+ctx.font = "20px Verdana";
+ctx.fillStyle = "aqua";
+ctx.fillText("Mohamed Mahmoudi", 8, 625);
+ctx.font = "30px Arial";
+ctx.fillStyle = "white";
+ctx.fillText("Level: "+s,8, 100);
+ctx.font = "30px Arial";
+ctx.fillText("Son :"+songs,1200, 50);
+
+   
+    /*ctx.fillStyle="red";*/
+    drcar(730,v1,"car2.png");/*voiter1*/
+    drcar(630,v2,"car2.png");;/*voiter2*/
+    drcar(530,v3,"car2.png");/*voiter3*/
+   /* ctx.fillStyle="blue";
+    drawrec(x,600);*/
+
+
+drcar(x,canvas.height-45,"car1.png");
+
+
+
+   
+   
+
+    if ((v1>570&&x==730)||(v2>570&&x==630)||(v3>570&&x==530))  {
+        son(2);
+        var scort='<h1>Score Final :'+sco+'</h1>';
+        document.getElementById('scorfi').innerHTML=scort;
+        clearInterval(set);
+        document.getElementById('star').style.display = "none";
+       document.getElementById('lose').style.display = "block";
+        }
+   
+    
+    if (v1+1>canvas.height-r)
+    {
+        son(1);
+        sco+=1;
+        change();
+        vv1=s+(Math.random() * 3);
+        v1=0;
+        
+
+    }
+    if (v2+1>canvas.height-r)
+    {
+        son();
+        sco+=1;
+        change();
+        vv2=s+(Math.random() * 3);
+        
+        v2=0;
+    }
+    if (v3+1>canvas.height-r)
+    {
+        son();
+        sco+=1;
+        change();
+        vv3=s+(Math.random() * 3);
+        
+        v3=0;
+    }
+  
+ //   a+=dx;
+ //  b+=dx;
+v1+=vv1;
+v2+=vv2;
+v3+=vv3;
+
+
+}
+function drawobject()
+{
+    ctx.fillStyle = "red";
+    ctx.beginPath();
+    ctx.rect(canvas.width/2, canvas.heigh/2, obh, obw);
+    ctx.fill();
+    ctx.closePath();
+
+}
+
+
+var set =setInterval(animate, 10);
+
+</script >
+</div>
+<div hidden id="lose" style="border: 5px dotted orange;">
+<p id="scorfi" style="font-size: 25px; color: aqua;"></p>
+    <div style="text-align:center">
+        <h1 align="center" style="color:aqua; font-size: 60px;" >😂😂😂🤣🤣😂😂😂🤣🤣😅😅😅😅😅🤣<br>🤣😂😂😂🤣🤣<br>خسرت</h1>
+            🤣 <input   type="button"  style="width: 300px;height: 150px; color: aqua; background-color: rgb(142, 43, 143); border-radius: 50px; font-size: 60px;" value=" عاود العب   "  onclick="location.reload();" >🤣
+</p>
+<p style="color: aqua; font-size: 30px; background-color: black;">Mohamed-Mahmoudi mini-project</p>
+</div>
+
+
+
+</div>
+    </body>
+    
+</html>
